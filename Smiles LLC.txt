@@ -1,0 +1,294 @@
+﻿/* 
+ Smiles LLC
+155 Bryson Avenue,  Boston, MA
+978-544-5555
+Monday-Saturday*/
+
+
+CREATE DATABASE IF NOT EXISTS Smiles_LLC1;
+
+
+ -- 1. Adult Patients Table--
+CREATE TABLE IF NOT EXISTS Insurance
+(Insurance_id INT PRIMARY KEY NOT NULL,
+Insurance_Company VARCHAR (100) NOT NULL,
+Phone_Number VARCHAR (15),
+Insurance_Status VARCHAR(50) NOT NULL);
+
+
+INSERT INTO Insurance
+VALUES
+(12345,"Delta Dental","567-566-7878","Enrolled"),
+(23346,"Dentegra","345-678-4545","Enrolled"),
+(25656,"Cigna Health Care","521-563-5656","Enrolled"),
+(45656,"Humana","978-452-5252","Enrolled"),
+(45674,"Aetna","852-412-1212","Enrolled"),
+(55674,"Idental United","978-521-2020","Enrolled"),
+(67874,"Delta Dental","567-566-7878","Unenrolled"),
+(56789,"BlueCross BlueShield","978-451-8978","Unenrolled"),
+(67854,"Aetna","852-412-1212","Enrolled"),
+(43214,"Cigna Health Care","521-563-5656","Enrolled"),
+(34563,"Delta Dental","567-566-7878","Enrolled"),
+(67884,"BlueCross BlueShield","978-451-8978","Enrolled"),
+(78643,"Aetna","852-412-1212","Pending"),
+(87654,"Humana","978-452-5252","Pending"),
+(34562,"Cigna Health Care","521-563-5656","Enrolled");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CREATE TABLE IF NOT EXISTS Patients( 
+Patient_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+First_Name VARCHAR(100)NOT NULL,
+Last_Name VARCHAR(100)NOT NULL,
+Address VARCHAR (250)NOT NULL,
+City VARCHAR (50),
+State CHAR(2),
+Phone_Number VARCHAR(15) UNIQUE NOT NULL,
+D_O_B  DATE NOT NULL,
+Age INT CHECK (Age>18),
+Gender VARCHAR (50) DEFAULT "Prefer not to answer",
+Patient_Starting_Date DATE NOT NULL,
+Patient_Status VARCHAR (20) NOT NULL,
+Insurance_id INT NOT NULL,
+CONSTRAINT Insurancefk1 FOREIGN KEY (Insurance_id) REFERENCES Insurance(Insurance_id) ON DELETE CASCADE);
+
+
+ALTER TABLE Patients
+AUTO_INCREMENT=1001;
+
+
+INSERT INTO Patients
+(First_name,
+ Last_name,
+ Address,
+ City,
+ State,
+ Phone_number,
+ D_O_B,
+ Age,
+ Gender,
+ Patient_starting_date,
+ Patient_Status,
+ Insurance_id)
+
+
+
+
+
+
+
+
+
+
+  VALUES 
+("John", "Adams","22 Canal Street","Boston","MA","978-521-0000","2000-9-12",23,"Male","2024-09-01","Active",12345),
+("Amy","Thomas","15 Ames Street","Woburn","MA","978-522-0001","1988-05-01",36,"Female","2024-09-05","Active",23346),
+("Joshua" ,"Cooper","12 Hope Street","Newton","MA","978-221-1010","1998-02-15",26,"Male","2024-09-10","Active", 25656),
+("Rose","Yang","153 Jackson Street","Lexington","MA","978-551-5151","1979-08-25",45,"Female","2024-09-15","Active",45656),
+("Andrew","Garcia","145 Washington Street","Everett","MA","978-451-4545","1995-07-15",29,"Male","2024-10-10","Active",45674),
+("Jessica","Patel","167 Kennedy Street","Worcester","MA","857-514-0404","1996-05-15",28,"Female","2024-10-11","Active",55674),
+("Jackson","Miller","10 Casey Avenue","Boston","MA","857-963-9696","1987-04-06",40,"Male","2024-10-20","Inactive",67874),
+("Geraldine","Eduardo","134 Chase Street","Boston","MA","978-543-6321", "1994-03-13",28,"Female","2024-10-22","Active",56789),
+("Charlotte","James","13  Marshall Street","Watertown","MA","978-544-5555","1991-11-15",33,"Female","2024-10-23","Active",67854), 
+("Cathryn","O'Brien","273 Oak Street","Dracut","MA","852-845-4544","1980-07-05",44,"Female","2024-10-25","Inactive",43214),
+("Layla","Mason","155 Jacksonville Street","Boston","MA","978-852-5151","1980-05-05",44,"Female","2024-10-26","Active",34563),
+("William","Jerez","205 Woodlawn Circle","Woburn","MA","952-945-9696","1988-01-01",36,"Male","2024-10-30","Active",67884),
+("Abigail","Carter","14 Roosevelt Street","Worcester","MA","651-632-3131","1979-02-05",49,"Female","2024-11-01","Inactive",78643),
+("Carlos","Ying","543 Broadway Street","Boston","MA","621-653-6363","1960-02-05",64,"Male","2024-11-02","Active",87654), 
+("Alicia","Williams","443 Russell Street","Boston","MA","654-655-5454","1991-03-03",33,"Female","2024-11-03","Active",34562);
+ 
+ -- 2. Doctors Table --
+CREATE TABLE  IF NOT EXISTS Doctors (
+Doctor_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+First_Name VARCHAR (100) NOT NULL,
+Last_Name VARCHAR (150) NOT NULL,
+Gender VARCHAR (50) NOT NULL DEFAULT "Prefer not to answer",
+Job_Title VARCHAR (100) NOT NULL,
+Years_of_Experience FLOAT NOT NULL, 
+Working_Days VARCHAR (100) NOT NULL,
+Working_Hours VARCHAR (100)  NOT NULL);
+
+
+ALTER TABLE Doctors
+AUTO_INCREMENT=201;
+
+
+INSERT INTO Doctors
+(First_Name,
+Last_Name,
+Gender,
+Job_Title,
+Years_of_Experience,
+Working_Days,
+Working_Hours)
+VALUES
+("Maryanne","Hunt","Female","General Dentist",4,"Tuesday-Saturday","8:00am-4:00pm"),
+("Tyron","Washington","Male","Pediatric Dentist",3,"Tuesday-Saturday","7:00am-3:00pm"),
+("Angelina","Wang","Female","Oral Surgeon",5,"Wednesday-Saturday","6:00am-4:00pm"),
+("Thomas","Roberts","Male","General Dentist",6,"Monday-Friday","8:00 am-5:00pm");
+ 
+  -- 3. Medical Assistants Table 
+  
+  CREATE TABLE  IF NOT EXISTS Dental_Assistants (
+Credential_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+Doctor_id INT,
+First_Name VARCHAR (100) NOT NULL,
+Last_Name VARCHAR (150) NOT NULL,
+Gender VARCHAR (50) NOT NULL DEFAULT "Prefer not to answer",
+Job_Title VARCHAR (100) NOT NULL,
+Years_of_Experience FLOAT NOT NULL, 
+Working_Days VARCHAR (100) NOT NULL,
+Working_Hours VARCHAR (100)  NOT NULL,
+CONSTRAINT Doctors_fk FOREIGN KEY(Doctor_id) REFERENCES Doctors(Doctor_id) ON DELETE CASCADE);
+
+
+ALTER TABLE Dental_Assistants
+AUTO_INCREMENT=301;
+
+
+SET FOREIGN_KEY_CHECKS=0;
+
+
+  INSERT INTO Dental_Assistants 
+(Doctor_id,
+First_Name,
+Last_Name,
+Gender,
+Job_Title,
+Years_of_experience,
+Working_Days,
+Working_Hours)
+VALUES
+ (201,"Emma","Jacobs","Female","Dental Assistant",1.5,"Tuesday-Saturday","7:00am-4:00pm"),
+(202,"Benjamin","Ortiz","Male","Dental Assistant",2,"Tuesday-Saturday","8:00am-5:00pm"),
+(203,"Hazel","Jackson","Female","Dental Assistant",1,"Tuesday-Saturday","7:00am-4:00pm"),
+(204,"Terrel","Jackson","Male","Dental Assistant",1.5,"Monday-Friday","8:00am-5:00pm");
+ 
+ -- 4. Procedure table --
+CREATE TABLE Procedures(
+Procedure_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+Procedure_Type VARCHAR (100) NOT NULL,
+Cost DECIMAL (10,2) NOT NULL);
+
+
+ALTER TABLE Procedures
+AUTO_INCREMENT=1;
+
+
+INSERT INTO Procedures
+(Procedure_type,
+Cost)
+ VALUES 
+("Basic Dental Cleaning",150.00),
+("Deep Dental Cleaning",350.00),
+("Dental Filling",500.00),
+("Dental Implant",1000.00),
+("Dental Crown",1800.00),
+("Dental Extraction",200.00),
+("Root Canal Treatment",1500.00),
+("General Consult w/ Xray",150.00),
+("General Consult",100.00),
+("Dental Sedation",200.00),
+("General Anesthesia",300.00),
+("Full Mouth Periodontal Surgery Treatment",5000.00);
+
+
+ 
+-- 5. Adults Appointments Table --
+CREATE TABLE IF NOT EXISTS Appointments(
+Appointment_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+Patient_id INT NOT NULL,
+Doctor_id INT NOT NULL,
+Procedure_id INT NOT NULL,
+Appointment_date DATE NOT NULL,
+Appointment_time TIME NOT NULL,
+Appointment_status VARCHAR (20) NOT NULL,
+CONSTRAINT Patients_fk1 FOREIGN KEY(Patient_id) REFERENCES Patients(Patient_id) ON DELETE CASCADE,
+CONSTRAINT Doctors_fk1 FOREIGN KEY(Doctor_id) REFERENCES Doctors(Doctor_id) ON DELETE CASCADE,
+CONSTRAINT Procedures_fk1 FOREIGN KEY(procedure_id) REFERENCES Procedures(Procedure_id) ON DELETE CASCADE);
+
+
+ALTER TABLE Appointments
+AUTO_INCREMENT=101;
+
+
+ SET FOREIGN_KEY_CHECKS=0;
+ 
+INSERT INTO Appointments
+(Patient_id,
+Doctor_id,
+Procedure_id,
+Appointment_date,
+Appointment_time,
+Appointment_status)
+ VALUES
+(1003,201,1,"2024-10-25","14:00","Attended"),
+(1005,203,7,"2024-10-29","9:00","Canceled"), 
+(1007,204,6,"2024-10-29","8:30","Attended"),
+(1008,201,8,"2024-11-05","15:00","Attended"),
+(1009,203,5,"2024-11-07","7:30","Attended"),
+(1010,204,3,"2024-11-15", "9:00","Confirmed"),
+(1006,201,2,"2024-11-19","10:00","Canceled"), 
+(1004,203,7,"2024-11-27","8:00","Confirmed"), 
+(1007,203,4,"2024-11-27","9:00","Confirmed"), 
+(1002,204,3,"2024-12-02","9:00","Confirmed"), 
+(1013,203,4,"2024-12-02","9:00","Confirmed"), 
+(1014,201,2,"2024-12-04","9:00","Confirmed"), 
+(1015,204,8,"2024-12-05","10:00","Confirmed");
+
+
+-- 6. Billings --
+CREATE TABLE  IF NOT EXISTS Billings(
+Billing_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+Patient_id INT NOT NULL,
+Appointment_id INT NOT NULL,
+Procedure_id INT NOT NULL,
+Total_Amount DECIMAL(10,2) NOT NULL,
+Billing_date DATE,
+Payment_status VARCHAR (50) NOT NULL DEFAULT "Unpaid",
+CONSTRAINT Patients_fk2 FOREIGN KEY(Patient_id) REFERENCES Patients(Patient_id) ON DELETE CASCADE,
+CONSTRAINT Appointments_fk2 FOREIGN KEY(Appointment_id) REFERENCES Appointments(Appointment_id) ON DELETE CASCADE);
+
+
+ALTER TABLE Billings
+AUTO_INCREMENT=4001;
+
+
+ SET FOREIGN_KEY_CHECKS=0;
+
+
+INSERT INTO  Billings
+(Patient_id,
+Appointment_id,
+Procedure_id,
+Total_Amount,
+Billing_date,
+Payment_status)
+ VALUES
+(1003,101,1,150.00,"2024-10-25","Paid"),
+(1007,103,6,200.00,"2024-10-29","Paid"),
+(1008,104,8,150.00,"2024-11-05","Paid"),
+(1009,105,5,1800.00,"2024-11-07","Pending");
+
+
+SET FOREIGN_KEY_CHECKS=1;
+
+
+COMMIT;

@@ -1,0 +1,206 @@
+﻿-- 1. Dentist specializations
+ SELECT 
+    *
+FROM
+    Doctors;
+ 
+ /* Insight 1: While Smiles LLC employs a pediatric dentist, there are currently no children on the client base. 
+ This represents an untapped market for the practice.
+Action Plan:
+ -Engage Existing Patients:Encourage current patients to bring their children by offering incentives or promotions.
+ -Implement holiday promotions: A targeted initiative during the holiday season could be a great first step. Smiles LLC could introduce a special program, such as:
+A free or discounted first visit for children when accompanying a parent or a holiday-themed activities for kids during their visit */
+
+
+ -- 2. Appointments
+-- 2.1 Confirmed appointments
+SELECT 
+    p.patient_id,
+    p.first_name,
+    p.last_name,
+    a.doctor_id,
+    pr.procedure_id,
+    pr.procedure_type,
+    a.appointment_date,
+    a.appointment_status
+FROM
+    appointments AS a
+        JOIN patients AS p ON a.patient_id = p.patient_id
+        JOIN procedures AS pr ON a.procedure_id = pr.procedure_id
+WHERE appointment_status = 'Confirmed'
+ORDER BY appointment_date;
+
+
+
+
+
+
+
+
+
+
+
+
+ -- 2.2 Percent rate on confirmed appointments 
+SELECT
+(SELECT DISTINCT 
+COUNT(appointment_status) AS confirmed_appointments
+FROM appointments
+WHERE appointment_status="Confirmed") /
+(SELECT DISTINCT 
+COUNT(appointment_status)  AS total_appointments
+FROM appointments);
+
+
+/* Insight #2: Smiles LLC has a 53% rate of confirmed appointments, presenting an opportunity to boost client retention and engagement through incentivized strategies.
+Action Plan:
+ Improve Appointment Confirmation Rates by:
+-Offering dental hygiene products (e.g., toothpaste, toothbrushes, floss) as a reward for patients who confirm their appointments within a designated time frame.
+-Bundling products into a small "dental care package" for extra appeal.*/
+
+
+-- 2.3 Canceled Appointments 
+SELECT 
+    Patient_id, 
+    First_name, 
+    Last_name
+FROM
+    Patients
+WHERE Patient_id IN (SELECT 
+            patient_id
+        FROM appointments
+        WHERE appointment_status ='Canceled');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Insight#3: Implementing a survey platform to capture reasons for appointment cancellations can provide valuable insights and help Smiles LLC improve client retention and operational efficiency. 
+Action Plan:
+-Survey Implementation:Introduce a simple, automated survey that patients can fill out upon canceling an appointment. This could be through email, text message, or a link within the patient portal.*/
+
+
+-- 3. Appointments and Doctors 
+-- 3.1 Confirmed Appointments by Doctor id. 
+SELECT 
+    doctor_id,
+    COUNT(appointment_id) AS Confirmed_Appointments
+FROM
+    appointments
+WHERE appointment_status = 'confirmed'
+GROUP BY doctor_id
+ORDER BY Confirmed_Appointments DESC;
+
+
+ -- 3.2 Doctors
+SELECT 
+    doctor_id,
+    first_name, 
+    last_name
+FROM
+    doctors
+WHERE
+    doctor_id IN (201,203,204);
+
+
+/* Insight# 3: While Smiles LLC has specialized doctors, there is limited information available about the procedures they offer.
+Expanding the range of procedures and providing clearer, more accessible information could enhance client trust and attract a broader patient base.
+
+
+
+
+
+
+
+
+
+
+
+
+Action Plan:
+-Expand procedure availability: Evaluate the demand for additional procedures based on patient feedback and industry trends.
+-Provide in office materialsProvide brochures or posters with a summary of services, ensuring patients are informed during their visits.
+-Utilize social and local events: Highlight newly introduced or underutilized procedures through social media ads, or local events.*/
+
+
+-- 4. Appointments and Patients 
+-- 4.1 Patients w/confirmed appointments per city  
+SELECT 
+    p.patient_id,
+    p.first_name,
+    p.last_name,
+    p.city,
+    a.procedure_id,
+    a.appointment_status
+FROM
+    patients AS p
+        JOIN appointments AS a ON p.patient_id = a.patient_id
+WHERE a.appointment_status = 'attended'
+ORDER BY city DESC;
+
+
+ -- 4.2 Patients that have attended to appointments per city 
+SELECT  
+    p.patient_id,
+    p.first_name,
+    p.last_name,
+    p.city,
+    a.procedure_id,
+    a.appointment_status
+FROM
+    patients AS p
+JOIN appointments AS a ON p.patient_id = a.patient_id
+WHERE a.appointment_status = 'confirmed'
+ORDER BY city DESC;
+
+
+
+
+
+
+
+
+ -- 4.3 Total Count of confirmed appointments per city 
+
+
+SELECT 
+    COUNT(DISTINCT (p.patient_id)) 
+    Total_confirmed_per_city,
+    p.city
+FROM
+    patients AS p
+        JOIN appointments AS a ON p.patient_id = a.patient_id
+WHERE
+    a.appointment_status = 'confirmed'
+GROUP BY city
+ORDER BY Total_confirmed_per_city DESC;
+
+
+  -- 4.4 Total Count of appointments attended per city 
+SELECT
+COUNT(DISTINCT(p.patient_id)) Total_attended_per_city,
+p.city
+FROM patients AS p
+JOIN appointments AS a ON p.patient_id=a.patient_id
+WHERE a.appointment_status="attended"
+GROUP BY city
+ORDER BY Total_attended_per_city DESC;
+
+
+/* Insight #4: Most clients of Smiles LLC are based out of Boston, while confirmation and attendance rates are lower for clients in other cities. 
+This suggests an opportunity to improve engagement with non-Boston clients through targeted marketing and accessibility enhancements.
+Action Plan:
+-Use targeted advertisements:Develop ads highlighting the convenience and benefits of attending appointments at Smiles LLC, tailored to non-Boston areas.
+-Leverage T Station Proximity:Provide T route maps and information prominently in the office and on Smiles LLC’s website.
+-Monitor feedback: Gather feedback from non-Boston clients to understand potential barriers and refine the strategy.*/
