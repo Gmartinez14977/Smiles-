@@ -4,8 +4,8 @@
 978-544-5555
 Monday-Saturday*/
 
-
-CREATE DATABASE IF NOT EXISTS Smiles_LLC1;
+USE `Smiles_LLC` ;
+CREATE DATABASE IF NOT EXISTS Smiles_LLC;
 
 
  -- 1. Adult Patients Table--
