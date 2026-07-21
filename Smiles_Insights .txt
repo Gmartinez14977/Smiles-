@@ -31,16 +31,6 @@ WHERE appointment_status = 'Confirmed'
 ORDER BY appointment_date;
 
 
-
-
-
-
-
-
-
-
-
-
  -- 2.2 Percent rate on confirmed appointments 
 SELECT
 (SELECT DISTINCT 
@@ -70,21 +60,6 @@ WHERE Patient_id IN (SELECT
             patient_id
         FROM appointments
         WHERE appointment_status ='Canceled');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* Insight#3: Implementing a survey platform to capture reasons for appointment cancellations can provide valuable insights and help Smiles LLC improve client retention and operational efficiency. 
 Action Plan:
@@ -116,17 +91,6 @@ WHERE
 
 /* Insight# 3: While Smiles LLC has specialized doctors, there is limited information available about the procedures they offer.
 Expanding the range of procedures and providing clearer, more accessible information could enhance client trust and attract a broader patient base.
-
-
-
-
-
-
-
-
-
-
-
 
 Action Plan:
 -Expand procedure availability: Evaluate the demand for additional procedures based on patient feedback and industry trends.
@@ -163,12 +127,6 @@ FROM
 JOIN appointments AS a ON p.patient_id = a.patient_id
 WHERE a.appointment_status = 'confirmed'
 ORDER BY city DESC;
-
-
-
-
-
-
 
 
  -- 4.3 Total Count of confirmed appointments per city 
