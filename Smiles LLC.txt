@@ -36,23 +36,6 @@ VALUES
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 CREATE TABLE IF NOT EXISTS Patients( 
 Patient_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 First_Name VARCHAR(100)NOT NULL,
@@ -87,14 +70,6 @@ INSERT INTO Patients
  Patient_starting_date,
  Patient_Status,
  Insurance_id)
-
-
-
-
-
-
-
-
 
 
   VALUES 
