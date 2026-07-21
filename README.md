@@ -1,13 +1,4 @@
-Project Overview
-Smiles is a dental office in Boston focused on providing high-quality, affordable care. This project involved designing a database and analyzing data to support business growth.
-Goals
-Build a secure and organized database to manage patient information
-Identify trends to understand what drives patient growth
-Analysis
-Using SQL, the following areas were explored:
-Dentist specializations to assess service demand
-Confirmed and canceled appointments to identify patterns and improvement opportunities
-Provider workload to evaluate performance distribution
-Patient location data to uncover geographic growth opportunities
-Outcome
-The analysis delivered insights to support data-driven decisions, improve operations, and help expand the client base.
+Smiles is a dental office in Boston focused on providing high-quality, affordable care. This project involved designing a relational database and performing data analysis to support business growth.
+The primary goals were to build a secure and organized database for managing patient information and to identify trends that drive patient growth.
+Using SQL, the analysis focused on several key areas, including dentist specializations to assess service demand; confirmed and canceled appointments to identify patterns and improvement opportunities; provider workload to evaluate performance distribution; and patient location data to uncover geographic trends and potential areas for expansion.
+The analysis delivered actionable insights to support data-driven decision-making, improve operational efficiency, and help expand the client base.
